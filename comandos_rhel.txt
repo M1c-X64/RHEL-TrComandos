@@ -1,0 +1,141 @@
+COMANDOS RHEL - PRACTICAS 1 A 4
+
+PRACTICA 1
+
+uname -m
+  Muestra la arquitectura del procesador
+
+lscpu
+  Muestra informacion detallada del CPU
+
+
+PRACTICA 2
+
+nmcli device status
+  Lista las interfaces de red y su estado
+
+nmcli connection show
+  Lista las conexiones configuradas y sus nombres
+
+nmcli connection modify ens160 ipv4.method auto
+  Configura ens160 en modo DHCP
+
+nmcli connection up ens160
+  Aplica el cambio
+
+nmcli connection modify ens160 ipv4.method manual ipv4.addresses 192.168.1.50/24 ipv4.gateway 192.168.1.1
+  Configura IP estatica, mascara y gateway en ens160
+
+nmcli connection up ens160
+  Aplica el cambio
+
+nmcli connection modify ens160 ipv4.dns "8.8.8.8 8.8.4.4"
+  Configura los DNS de Google en ens160
+
+nmcli connection up ens160
+  Aplica el cambio
+
+ip addr show ens160
+  Muestra la IP asignada a ens160
+
+nmcli device show ens160 | grep -i dns
+  Muestra los DNS activos en ens160
+
+cat /etc/resolv.conf
+  Muestra el archivo donde el sistema guarda los DNS en uso
+
+nmtui
+  Abre el menu de texto para editar/activar la conexion
+
+sudo ls /etc/NetworkManager/system-connections/
+  Muestra el nombre exacto del archivo de configuracion
+
+sudo cat /etc/NetworkManager/system-connections/ens160.nmconnection
+  Muestra el contenido del archivo de configuracion
+
+sudo cp /etc/NetworkManager/system-connections/ens160.nmconnection /etc/NetworkManager/system-connections/ens160.nmconnection.bak
+  Hace una copia de seguridad del archivo
+
+sudo vi /etc/NetworkManager/system-connections/ens160.nmconnection
+  Edita el archivo de configuracion
+
+sudo nmcli connection reload
+  Vuelve a leer los archivos de configuracion
+
+sudo nmcli connection up ens160
+  Aplica los cambios del archivo
+
+sudo ip addr add 192.168.1.50/24 dev ens160
+  Asigna una IP temporal a ens160
+
+sudo ip route add default via 192.168.1.1
+  Define una puerta de enlace temporal
+
+
+PRACTICA 3
+
+sudo useradd tu_nombre
+  Crea un nuevo usuario
+
+sudo passwd tu_nombre
+  Asigna contrasena al usuario
+
+sudo usermod -aG wheel tu_nombre
+  Agrega el usuario al grupo wheel
+
+groups tu_nombre
+  Muestra los grupos del usuario
+
+su - tu_nombre
+  Cambia a la sesion del usuario
+
+sudo whoami
+  Confirma el acceso de superusuario
+
+exit
+  Vuelve a la sesion anterior
+
+sudo groupadd guest
+  Crea el grupo guest
+
+sudo useradd -G guest usuario_guest
+  Crea un usuario y lo agrega al grupo guest
+
+getent group guest
+  Muestra los miembros del grupo guest
+
+sudo userdel -r usuario_guest
+  Elimina el usuario y su carpeta home
+
+sudo groupdel guest
+  Elimina el grupo guest
+
+
+PRACTICA 4
+
+mkdir materia
+  Crea la carpeta materia
+
+cd materia
+  Entra a la carpeta materia
+
+vi estudiante.txt
+  Crea y edita el archivo estudiante.txt
+
+chmod 700 estudiante.txt
+  Deja control total solo al dueno
+
+chmod 070 estudiante.txt
+  Deja control total solo al grupo propietario
+
+mkdir ../materia2
+  Crea la carpeta materia2
+
+sudo cp estudiante.txt ../materia2/
+  Copia el archivo a materia2
+
+cd ..
+  Sube un nivel de carpeta
+
+sudo rm -rf materia
+  Elimina la carpeta materia con su contenido
